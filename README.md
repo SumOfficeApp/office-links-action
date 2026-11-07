@@ -19,6 +19,8 @@ jobs:
 
 That is all. The links also appear in the job summary.
 
+See it on a real pull request that changes a contract and an invoice: https://github.com/SumOfficeApp/office-links-action/pull/1
+
 ## Inputs
 
 | Input | Default | What it does |
