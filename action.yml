@@ -1,0 +1,38 @@
+name: 'Open, fill in and sign office files'
+description: 'Reviewers read, fill in and sign the .docx and .xlsx files of a pull request without downloading them.'
+author: 'SumOffice'
+branding:
+  icon: 'file-text'
+  color: 'blue'
+inputs:
+  files:
+    description: 'Files to link, one per line. Empty: the .docx, .xlsx and .pptx files changed in this pull request or push.'
+    required: false
+    default: ''
+  comment:
+    description: 'Post or update one comment on the pull request with the links (needs pull-requests: write).'
+    required: false
+    default: 'true'
+  token:
+    description: 'Token to read the changed files and write the comment.'
+    required: false
+    default: ${{ github.token }}
+  from:
+    description: 'Your own tag in Layers statistics.'
+    required: false
+    default: ''
+outputs:
+  links:
+    description: 'JSON list of {path, url} for each office file.'
+    value: ${{ steps.run.outputs.links }}
+runs:
+  using: 'composite'
+  steps:
+    - id: run
+      shell: bash
+      run: node "$GITHUB_ACTION_PATH/run.mjs"
+      env:
+        INPUT_FILES: ${{ inputs.files }}
+        INPUT_COMMENT: ${{ inputs.comment }}
+        INPUT_TOKEN: ${{ inputs.token }}
+        INPUT_FROM: ${{ inputs.from }}
